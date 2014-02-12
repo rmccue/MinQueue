@@ -49,7 +49,12 @@ abstract class MinQueue {
 
 		$this->prefix        = apply_filters( 'minqueue_prefix', $this->prefix );
 
-		$wp_dir              = str_replace( home_url(), '', site_url() );
+		if ( file_exists( ABSPATH . 'wp-config.php' ) ) {
+			$this->site_root = ABSPATH;
+		}
+		else {
+			$this->site_root = trailingslashit( dirname( ABSPATH ) );
+		}
 		$this->site_root     = str_replace( $wp_dir . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, ABSPATH );
 		$this->site_root     = apply_filters( 'minqueue_site_root', $this->site_root );
 
